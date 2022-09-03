@@ -1,0 +1,65 @@
+<h1 mat-dialog-title>タスク追加</h1>
+<div mat-dialog-content>
+    <form class="todoForm" [formGroup]="form">
+        <mat-form-field>
+            <mat-label>やること</mat-label>
+            <input matInput [(ngModel)]="data.work" formControlName="work">
+        </mat-form-field>
+
+        <mat-error class='validate-message' *ngIf="form.controls.work.hasError('required')">
+            入力してください
+        </mat-error>
+    </form>
+
+    <p class='in-charge'>どっち？</p>
+    <fieldset class='in-charge-btn house-btn'>
+        <ng-container *ngFor='let b of books; index as i'>
+            <input id="book{{i}}" class="radio-inline__input" type="radio" [value]="b.isbn" [checked]="sbook == b.isbn"
+                [(ngModel)]='sbook' (change)="show(i)" />
+            <label class="radio-inline__label house-name" for="book{{i}}">
+                {{b.title}}
+            </label>
+        </ng-container>
+    </fieldset>
+
+    <br>
+
+    <button mat-flat-button color="primary" (click)=byDate()>日付で登録</button><button mat-flat-button color="primary"
+        class='regi-date' (click)=byDay()>曜日で登録</button>
+
+    <div *ngIf='byDateFlag'>
+        <mat-form-field appearance="fill" style="margin-top: 15px; width: 93%;">
+            <mat-label>日付を入力して下さい</mat-label>
+            <input matInput [matDatepicker]="picker" [formControl]="date" (dateChange)="output()">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+    </div>
+
+    <div *ngIf='byDayFlag'>
+        <div class="container col-12">
+            <!-- <ul class="ks-cboxtags">
+              <li><input type="checkbox" id="checkboxTwo" value="月" (click)=dayClick()><label for="checkboxTwo">月</label></li>
+              <li><input type="checkbox" id="checkboxSeven" value="土"><label for="checkboxSeven">土</label></li><br>
+              <li><input type="checkbox" id="checkboxThree" value="火" checked><label for="checkboxThree">火</label></li>
+              <li><input type="checkbox" id="checkboxOne" value="日"><label for="checkboxOne">日</label></li><br>
+              <li><input type="checkbox" id="checkboxFour" value="水"><label for="checkboxFour">水</label></li><br>
+              <li><input type="checkbox" id="checkboxFive" value="木"><label for="checkboxFive">木</label></li><br>
+              <li><input type="checkbox" id="checkboxSix" value="金"><label for="checkboxSix">金</label></li><br>
+            </ul> -->
+            <ul class="ks-cboxtags">
+                <li *ngFor='let item of checkdata2; index as i'>
+                    <input type="checkbox" [(ngModel)]="checkdata2[i].selected" id="checkbox{{i}}" value="item.value" (click)=dayClick()>
+                    <label for="checkbox{{i}}">{{item.value}}</label>
+                </li>
+              </ul>
+          
+          </div>
+    </div>
+
+
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">キャンセル</button>
+    <button mat-button [disabled]="!form.valid || !dayInput" [mat-dialog-close]="data" cdkFocusInitial class='regi-btn'>登録</button>
+</div>

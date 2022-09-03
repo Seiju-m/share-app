@@ -1,0 +1,295 @@
+<div class="list-wrapper">
+  <!-- <div class='row'>
+    <p>食材</p>
+
+    <div (click)="collapse.toggle()" [attr.aria-expanded]="isCollapsed" aria-controls="collapseExample"
+      *ngIf='isCollapsed else minus' class='show-style'>
+      <i class="fas fa-plus-circle"></i>
+    </div>
+    <ng-template #minus>
+      <div (click)="collapse.toggle()" [attr.aria-expanded]="isCollapsed" aria-controls="collapseExample">
+        <i class="fas fa-minus-circle"></i>
+      </div>
+    </ng-template>
+  </div>
+
+  <-- -->
+  <!-- <div cdkDropListGroup>
+    <div class="example-container">
+      <h2>To do</h2>
+  
+      <div
+        cdkDropList
+        [cdkDropListData]="todooo"
+        class="example-list" 
+        (cdkDropListDropped)="drop($event)">
+
+        <div class="example-box" *ngFor="let item of todooo" cdkDrag
+        [cdkDragStartDelay]="300"
+        cdkDragLockAxis="y" 
+        >{{item}}</div>
+      </div>
+    </div>
+  
+    <div class="example-container">
+      <h2>Done</h2>
+  
+      <div
+        cdkDropList
+        [cdkDropListData]="done"
+        class="example-list"
+        (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let item of done" cdkDrag>{{item}}</div>
+      </div>
+    </div>
+  </div> -->
+
+
+  <mat-accordion class="example-headers-align" cdkDropListGroup>
+    <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          食材
+          <div class='maru' *ngIf='foodCount > 0'>{{ foodCount }}</div>
+
+        </mat-panel-title>
+
+      </mat-expansion-panel-header>
+
+      <form #myForm="ngForm">
+
+        <table #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed" [@smoothCollapse]="isCollapsed?'initial':'final'">
+          <tbody cdkDropList [cdkDropListData]="todoList" class="example-list" (cdkDropListDropped)="drop($event)">
+
+            <tr class="form-check" *ngFor='let item of todoList; index as i' cdkDrag [cdkDragStartDelay]="50"
+              cdkDragLockAxis="y">
+
+              <!-- checkbox -->
+              <td class='list-td' (swipe)="onSwipe($event, item)">
+                <input class="form-check-input checks" type="checkbox" name="item{{i}}" id="item{{i}}"
+                  [(ngModel)]="item.selected" [value]="item.isbn" (change)="check(item, 'food', i)">
+                <label class="form-check-label label-text" for=item{{i}}>{{item.title}}</label>
+              </td>
+
+              <!-- button -->
+              <td *ngIf='item.selected == false; else space'>
+                <fieldset>
+                  <input id="item-{{ i * 3 + 0 }}" class="radio-inline__input" type="radio"
+                    name="accessible-radio{{i * 3}}" value="item-{{ i * 3 + 0 }}" [checked]="item.checked[0]=='checked'"
+                    (click)='click(item, 0, i)' />
+                  <label class="radio-inline__label" for="item-{{ i * 3 + 0 }}">
+                    西村
+                  </label>
+                  <input id="item-{{ i * 3 + 1 }}" class="radio-inline__input" type="radio"
+                    name="accessible-radio{{i * 3}}" value="item-{{ i * 3 + 1 }}" [checked]="item.checked[1]=='checked'"
+                    (click)='click(item, 1, i)' />
+                  <label class="radio-inline__label" for="item-{{ i * 3 + 1 }}">
+                    森下
+                  </label>
+                  <input id="item-{{ i * 3 + 2 }}" class="radio-inline__input" type="radio"
+                    name="accessible-radio{{i * 3}}" value="item-{{ i * 3 + 2 }}" [checked]="item.checked[2]=='checked'"
+                    (click)='click(item, 2, i)' />
+                  <label class="radio-inline__label" for="item-{{ i * 3 + 2 }}">
+                    未定
+                  </label>
+                </fieldset>
+              </td>
+
+              <ng-template #space>
+
+                <td>
+                  <span class="example-spacer"></span>
+                </td>
+
+              </ng-template>
+
+              <!-- trash icon -->
+              <td *ngIf='deleting' style="cursor: pointer;" (click)='deleteItem(item)'>
+                <i class="far fa-trash-alt  trash-icon"></i>
+              </td>
+
+              <td *ngIf='editing' style="cursor: pointer;" (click)='editTodo(item, i)'>
+                <i class="fas fa-pencil-alt"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </form>
+      <button mat-icon-button class='add-item' (click)="createTodo('food')">
+        <mat-icon>add_circle_outline</mat-icon>
+      </button>
+
+
+      <mat-action-row>
+        <button mat-button style='color: #3F50B5;' (click)="nextStep()">日用品 <i class="fas fa-chevron-down"></i></button>
+      </mat-action-row>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          日用品
+          <div class='maru' *ngIf='dailyCount > 0'>{{ dailyCount }}</div>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <form #myForm="ngForm">
+
+        <table #collapse2="ngbCollapse" [(ngbCollapse)]="isCollapsed2"
+          [@smoothCollapse]="isCollapsed2?'initial':'final'">
+          <tbody cdkDropList [cdkDropListData]="todoList2" class="example-list" (cdkDropListDropped)="drop($event)">
+
+            <tr class="form-check" *ngFor='let item of todoList2; index as i' cdkDrag [cdkDragStartDelay]="50"
+              cdkDragLockAxis="y">
+
+              <!-- checkbox -->
+              <td class='list-td' (swipe)="onSwipe($event, item)">
+                <input class="form-check-input" type="checkbox" name="itemII{{i}}" id="itemII{{i}}"
+                  [(ngModel)]="item.selected" [value]="item.isbn" (change)="check(item, 'daily', i)">
+                <label class="form-check-label label-text" for=itemII{{i}}>{{item.title}}</label>
+              </td>
+
+              <!-- button -->
+              <td *ngIf='item.selected == false; else space'>
+                <fieldset>
+                  <input id="item2-{{ i * 3 + 0 }}" class="radio-inline__input" type="radio"
+                    name="accessible-radio{{i * 4}}" value="item2-{{ i * 3 + 0 }}"
+                    [checked]="item.checked[0]=='checked'" (click)='click(item, 0, i)' />
+                  <label class="radio-inline__label" for="item2-{{ i * 3 + 0 }}">
+                    西村
+                  </label>
+                  <input id="item2-{{ i * 3 + 1 }}" class="radio-inline__input" type="radio"
+                    name="accessible-radio{{i * 4}}" value="item2-{{ i * 3 + 1 }}"
+                    [checked]="item.checked[1]=='checked'" (click)='click(item, 1, i)' />
+                  <label class="radio-inline__label" for="item2-{{ i * 3 + 1 }}">
+                    森下
+                  </label>
+                  <input id="item2-{{ i * 3 + 2 }}" class="radio-inline__input" type="radio"
+                    name="accessible-radio{{i * 4}}" value="item2-{{ i * 3 + 2 }}"
+                    [checked]="item.checked[2]=='checked'" (click)='click(item, 2, i)' />
+                  <label class="radio-inline__label" for="item2-{{ i * 3 + 2 }}">
+                    未定
+                  </label>
+                </fieldset>
+              </td>
+
+              <ng-template #space>
+
+                <td>
+                  <span class="example-spacer"></span>
+                </td>
+
+              </ng-template>
+
+              <!-- trash icon -->
+              <td *ngIf='deleting' style="cursor: pointer;" (click)='deleteItem(item)'>
+                <i class="far fa-trash-alt  trash-icon"></i>
+              </td>
+
+              <td *ngIf='editing' style="cursor: pointer;" (click)='editTodo(item, i)'>
+                <i class="fas fa-pencil-alt"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </form>
+      <button mat-icon-button class='add-item' (click)="createTodo('daily')">
+        <mat-icon>add_circle_outline</mat-icon>
+      </button>
+
+      <mat-action-row>
+        <button mat-button style='color: #3F50B5;' (click)="prevStep()"><i class="fas fa-chevron-up"></i> 食材</button>
+        <button mat-button style='color: #3F50B5;' (click)="nextStep()">閉じる <i class="fas fa-times"></i></button>
+      </mat-action-row>
+
+    </mat-expansion-panel>
+
+  </mat-accordion>
+  <!-- <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        その他
+        <div class='maru' *ngIf='otherCount > 0'>{{ otherCount }}</div>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <form #myForm="ngForm">
+
+      <table #collapse3="ngbCollapse" [(ngbCollapse)]="isCollapsed3" [@smoothCollapse]="isCollapsed3?'initial':'final'">
+        <tbody  cdkDropList
+        [cdkDropListData]="todoList3"
+        class="example-list" 
+        (cdkDropListDropped)="drop($event)">
+  
+          <tr class="form-check" *ngFor='let item of todoList3; index as i'
+          cdkDrag
+          [cdkDragStartDelay]="300"
+          cdkDragLockAxis="y"> -->
+
+  <!-- checkbox -->
+  <!-- <td class='list-td' (swipe)="onSwipe($event, item)">
+              <input class="form-check-input" type="checkbox" name="itemIII{{i}}" id="itemIII{{i}}" [(ngModel)]="item.selected"
+                [value]="item.isbn" (change)="check(item, 'other', i)">
+              <label class="form-check-label label-text" for=itemIII{{i}}>{{item.title}}</label>  
+            </td> -->
+
+  <!-- button -->
+  <!-- <td *ngIf='item.selected == false; else space'>
+              <fieldset>
+                <input id="item3-{{ i * 3 + 0 }}" class="radio-inline__input" type="radio"
+                  name="accessible-radio{{i * 5}}" value="item3-{{ i * 3 + 0 }}" [checked]="item.checked[0]=='checked'"
+                  (click)='click(item, 0, i)' />
+                <label class="radio-inline__label" for="item3-{{ i * 3 + 0 }}">
+                  西村
+                </label>
+                <input id="item3-{{ i * 3 + 1 }}" class="radio-inline__input" type="radio"
+                  name="accessible-radio{{i * 5}}" value="item3-{{ i * 3 + 1 }}" [checked]="item.checked[1]=='checked'"
+                  (click)='click(item, 1, i)' />
+                <label class="radio-inline__label" for="item3-{{ i * 3 + 1 }}">
+                  森下
+                </label>
+                <input id="item3-{{ i * 3 + 2 }}" class="radio-inline__input" type="radio"
+                  name="accessible-radio{{i * 5}}" value="item3-{{ i * 3 + 2 }}" [checked]="item.checked[2]=='checked'"
+                  (click)='click(item, 2, i)' />
+                <label class="radio-inline__label" for="item3-{{ i * 3 + 2 }}">
+                  未定
+                </label>
+              </fieldset>
+            </td>
+
+            <ng-template #space>
+             
+              <td>
+                  <span class="example-spacer"></span>
+              </td>
+              
+            </ng-template> -->
+
+  <!-- trash icon -->
+  <!-- <td *ngIf='deleting' style="cursor: pointer;" (click)='deleteItem(item)'>
+              <i class="far fa-trash-alt  trash-icon"></i>
+            </td>
+
+            <td *ngIf='editing' style="cursor: pointer;" (click)='editTodo(item, i)'>
+              <i class="fas fa-pencil-alt"></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  
+    </form>
+    <button mat-icon-button class='add-item' (click)="createTodo('other')">
+      <mat-icon>add_circle_outline</mat-icon>
+    </button>
+
+    <mat-action-row>
+      <button mat-button style='color: #3F50B5;' (click)="prevStep()"><i class="fas fa-chevron-up"></i> 日用品</button>
+      <button mat-button style='color: #3F50B5;' (click)="nextStep()">閉じる <i class="fas fa-times"></i></button>
+    </mat-action-row>
+  </mat-expansion-panel>
+
+</mat-accordion> -->
+
+</div>

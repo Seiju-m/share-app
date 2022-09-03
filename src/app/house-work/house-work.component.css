@@ -1,0 +1,114 @@
+.house-wrapper {
+  padding: 20px;
+  height: 100vh;
+  background-color: #e9e3df;
+}
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+  box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+}
+
+th {
+  border: 1px solid #ddd;
+  padding: 5px;
+  text-align: center;
+  width: 50px;
+  height: 20px;
+  overflow: hidden;
+  background-color: #FFFFFF;
+}
+
+td {
+  border: 1px solid #ddd;
+  padding: 5px;
+  text-align: center;
+  width: 50px;
+  height: 60px;
+  overflow: hidden;
+  background-color: #FFFFFF;
+}
+
+/* td:first-child {
+  color: red;
+}
+
+td:last-child {
+  color: royalblue;
+}
+
+td:last-child {
+  color: royalblue;
+} */
+
+/* .is-disabled {
+  color: #ccc;
+} */
+
+.date {
+  position: fixed;
+  margin-top: -26px;
+  font-size: 0.8em;
+  width: 0;
+  height: 0;
+}
+
+.event {
+  overflow: hidden;
+  width: 40px;
+  height: 35px;
+}
+
+.to-do {
+  background-color: #FFFFFF;
+  margin: 10px;
+  /* border: 1px solid #333; */
+  box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+}
+
+.name,
+.task,
+.status {
+  border: 1px solid rgba(86, 61, 124, 0.2);
+  padding: 10px;
+}
+
+.sunday {
+  color: #FF3F80;
+}
+
+.saturday {
+  color: #3F50B5;
+}
+
+/**********************/
+
+
+/**********************/
+.cooking {
+  width: 335px;
+}
+
+.work {
+  width: 80px !important;
+}
+
+td.cook-table {
+  height: 30px !important;
+}
+
+.do {
+  background: #3F50B5;
+  color: #fff;
+}
+
+.add-icon {
+  transition: 0.7s;
+}
+
+.add-icon:active {
+  color: #FF3F80;
+}
+
+

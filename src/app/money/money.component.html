@@ -1,0 +1,69 @@
+<!-- <ng-container *ngIf="user$ | async as user; else showLogin"> -->
+
+<div class="money-wrapper">
+
+    <mat-accordion>
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    共通口座
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <iframe style="width:98%; height:30vh"
+                src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSHV5cl7D6CEBpgWUFpomufL1dyHaO3ZSIFX1f2Et_WsSbtqI0xryr7Jb3UUJPpt46mF1NV8iWcEiFn/pubhtml?gid=32556776&amp;single=true&amp;chrome=false&amp;headers=false&amp;range=B2:E109"></iframe>
+        </mat-expansion-panel>
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    入金ルール
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-list role="list">
+                <mat-list-item role="listitem">日にち ▶ 毎月25日</mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item role="listitem">入金額 ▶︎ 10万円</mat-list-item>
+            </mat-list>
+        </mat-expansion-panel>
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    退去時の費用
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-list role="list">
+                <mat-list-item role="listitem">結婚 ▶︎ 折半</mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item role="listitem">転職 ▶︎ 折半</mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item role="listitem">2年以内 ▶︎ 7:3</mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item role="listitem">その他 ▶︎ 共通貯金から</mat-list-item>
+            </mat-list>
+        </mat-expansion-panel>
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    ネットキャッシュバック
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-list role="list">
+                <mat-list-item role="listitem">違約金 ▶︎ 2021年9月ごろ</mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item role="listitem">工事費用 ▶︎ 2021年9月ごろ</mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item role="listitem">5万円 ▶︎ 2021年9月ごろから3回</mat-list-item>
+            </mat-list>
+        </mat-expansion-panel>
+    </mat-accordion>
+
+
+
+</div>
+
+<!-- </ng-container>
+
+<ng-template #showLogin>
+    <div class='login'>
+        <button mat-raised-button (click)="login()" class='login-btn'>ログイン</button>
+    </div>
+</ng-template> -->

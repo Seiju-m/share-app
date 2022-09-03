@@ -1,0 +1,7 @@
+<div class="header-wrapper row">
+    <h3>{{ header.title }}</h3>
+
+    <div *ngIf="user$ | async as user"  (click)="logout()" class='logout-icon'>
+        <i class="fas fa-sign-out-alt"></i>
+    </div>
+</div>

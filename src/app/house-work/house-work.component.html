@@ -1,0 +1,146 @@
+<div class="house-wrapper">
+    <!-- {{ year }} / {{ ('0' + month).slice(-2) }}
+    <div (click)='prevMonth()'>前</div>
+    <div (click)='nextMonth()'>次</div>
+
+    <div (click)="collapse.toggle()" [attr.aria-expanded]="isCollapsed" aria-controls="collapseExample"
+        *ngIf='isCollapsed else minus' class='show-style'>
+        <i class="fas fa-plus-circle"></i>
+    </div>
+    <ng-template #minus>
+        <div (click)="collapse.toggle()" [attr.aria-expanded]="isCollapsed" aria-controls="collapseExample">
+            <i class="fas fa-minus-circle"></i>
+        </div>
+    </ng-template> -->
+
+    <!-- <table #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed" [@smoothCollapse]="isCollapsed?'initial':'final'">
+        <th *ngFor='let day of weeks; index as i'>
+            {{ day }}
+        </th> -->
+        <!-- w = 週 -->
+        <!-- <tr *ngFor='let n of week_per; index as w '> -->
+            <!-- k = 日にち -->
+            <!-- <td *ngFor='let o of weeks; index as k'> -->
+
+                <!-- 先月の余り -->
+                <!-- <div *ngIf='w == 0 && k < startDay; else date' class='is-disabled date' (click)='prevMonth()'>{{
+                    lastMonthendDayCount - startDay + k + 1 }}</div> -->
+                <!-- 今月のマジ -->
+                <!-- <ng-template #date>
+                    <div *ngIf='(dayCount + 7 * w + k -startDay ) <= endDayCount; else overDate'
+                        (click)='dateClick(dayCount + 7 * w + k - startDay)' class='date'>{{ dayCount + 7 * w + k -
+                        startDay }}
+                        <div class="event" *ngIf="eventArr[(dayCount + 7 * w + k -startDay )] != undefined">
+                            <div *ngFor='let e of eventArr[(dayCount + 7 * w + k -startDay )]'>
+                                {{ e }}
+                            </div>
+                        </div>
+                    </div>
+
+
+                </ng-template> -->
+                <!-- 来月の先走り -->
+                <!-- <ng-template #overDate>
+                    <div class='is-disabled date' (click)='nextMonth()'>{{ dayCount + 7 * w + k - startDay -
+                        endDayCount
+                        }}
+                    </div>
+                </ng-template>
+
+            </td>
+        </tr>
+    </table>
+
+    <hr> -->
+    <table style="margin-top: 10px; margin-bottom: 20px;">
+        <th *ngFor='let day of weeks; index as i'>
+            <div *ngIf='weekday + i < 7; else newWeek' >{{ weeks[weekday + i] }}</div>
+            <ng-template #newWeek>
+                <div>{{ weeks[i - (7-weekday)] }} </div>
+            </ng-template>
+        </th>
+        <tr>
+            <td *ngFor='let day of weeks; index as i'>
+                <div *ngIf='(today + i ) <= endDayCount; else overDate'  
+                 [ngClass]="{'saturday' : weeks[i - (7-weekday)] ==  '土' || weeks[weekday + i] ==  '土', 'sunday' : weeks[i - (7-weekday)] ==  '日' ||  weeks[weekday + i]  ==  '日' }"
+                 (click)='clicked(today + i)'>
+                {{ (today + i) }} 
+                </div>
+                <ng-template #overDate>
+                    <div (click)='clicked(today + i - endDayCount)' class='is-disabled' [ngClass]="{'saturday' : weeks[i - (7-weekday)] ==  '土' || weeks[weekday + i] ==  '土', 'sunday' : weeks[i - (7-weekday)] ==  '日' }">{{ today + i - endDayCount }}  
+                    </div>
+                </ng-template>
+                <!-- <div *ngFor='let task of taskList | async; index as j'>
+                    <span *ngIf="(thisMonth + (today + i)) == task.date">{{ task.date }}</span>
+                </div> -->
+            </td>
+        </tr>
+    </table>
+
+    <!-- <div class='row'>
+        今日の家事
+        <div (click)='addRow()'>+</div>
+        <div (click)='deleteRow()'>-</div>
+    </div> -->
+    <!-- <div class='row to-do' *ngFor="let task of taskArr; index as l">
+        <div class="col-4 name">{{ task.name }}</div>
+        <div class="col-4 task">{{ task.task }}</div>
+        <div class="col-4 status" *ngIf='task.status == false; else done' (click)='changeStatus(l)'>未完了</div>
+        <ng-template #done>
+            <div class="col-4 status" (click)='changeStatus(l)'>完了</div>
+        </ng-template>
+    </div> -->
+    {{ month }} / {{ today }} の家事
+    <div class='row to-do' *ngFor="let task of todaytaskList; index as l">
+        <div class="col-2 name">{{ task.name }}</div>
+        <div class="col-7 task text-center">{{ task.task }}</div>
+        <div class="col-3 status text-center" *ngIf='task.status == false; else done' (click)='changeStatus(l)'>
+            <!-- <div class="col-3 status text-center"  (click)='deleteItem(task)'> -->
+           未完了
+        </div>
+        <ng-template #done>
+            <div class="col-3 status text-center" (click)='changeStatus(l)'>完了</div>
+        </ng-template>
+    </div>
+
+    <!-- <div (click)="createTask()">タスク作成</div> -->
+    <button mat-icon-button class='add-item' (click)="createTask()">
+        <mat-icon>add_circle_outline</mat-icon>
+      </button>
+
+
+      <hr>
+
+      <div style="margin-bottom: 10px;">料理分担</div>
+
+        <table class='cooking' *ngFor='let cook of todoList | async; index as i' style="margin-bottom: 20px;">
+            <tr class="col-sm-12">
+                <td class="col-sm-5 cook-table" [ngClass]="{'do' : cook.do_n}">
+                        西村 <span *ngIf="cook.taskCount_n >0 ">{{ cook.taskCount_n }}</span>
+                </td>
+                
+                <td rowspan="2"  class="col-sm-2" style="width: 40px !important;">
+                    <div *ngIf="i == 0 else buy">料理</div>
+                    <ng-template #buy>
+                        買い出し
+                    </ng-template>
+                </td>
+                <td class="col-sm-5 cook-table" [ngClass]="{'do' : cook.do_m}">
+                    森下 <span *ngIf="cook.taskCount_m >0 ">{{ cook.taskCount_m }}</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-sm-5 cook-table">
+                    <mat-icon style="margin-right: 17px;" (click)="doneTask('m', cook)" class='add-icon'><span>add_task</span></mat-icon>
+                    
+                    <mat-icon style="font-size: 1.1em;" (click)="undeCount('m', cook)">undo</mat-icon>
+                </td>
+                <td class="col-sm-5 cook-table">
+                    <mat-icon style="margin-right: 17px;" (click)="doneTask('n', cook)">add_task</mat-icon>
+                    
+                    <mat-icon style="font-size: 1.1em;" (click)="undeCount('n', cook)">undo</mat-icon>
+                </td>
+            </tr>
+        </table>
+
+</div>

@@ -1,0 +1,48 @@
+<h1 mat-dialog-title>{{ data.title }}</h1>
+<div mat-dialog-content>
+    <form class="todoForm" [formGroup]="form">
+        <mat-form-field>
+            <mat-label>商品名</mat-label>
+            <input matInput [(ngModel)]="data.name" formControlName="name">
+        </mat-form-field>
+
+        <mat-error class='validate-message' *ngIf="form.controls.name.hasError('required')">
+            入力してください
+        </mat-error>
+    </form>
+
+    <p class='in-charge'>担当</p>
+    <!-- <fieldset>
+    <input id="item0" class="radio-inline__input" type="radio"
+         value="item0" name='item'
+        [checked]="list[0]=='checked'"  (click)="click(list)"/>
+    <label class="radio-inline__label" for="item0">
+        西村
+    </label>
+    <input id="item1" class="radio-inline__input" type="radio"
+         value="item1" name='item'
+        [checked]="list[1]=='checked'"  (click)="click(list)"/>
+    <label class="radio-inline__label" for="item1">
+        森下
+    </label>
+    <input id="item2" class="radio-inline__input" type="radio"
+         value="item2" name='item'
+        [checked]="list[2]=='checked'" (click)="click(list)" />
+    <label class="radio-inline__label" for="item2">
+        未定
+    </label>
+</fieldset> -->
+    <fieldset class='in-charge-btn'>
+        <ng-container *ngFor='let b of books; index as i'>
+            <input id="book{{i}}" class="radio-inline__input" type="radio" [value]="b.isbn" [checked]="sbook == b.isbn"
+                [(ngModel)]='sbook' (change)="show(i)" />
+            <label class="radio-inline__label list-name" for="book{{i}}">
+                {{b.title}}
+            </label>
+        </ng-container>
+    </fieldset>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">キャンセル</button>
+    <button mat-button [disabled]="!form.valid" [mat-dialog-close]="data" cdkFocusInitial>{{ data.btnTitle }}</button>
+</div>

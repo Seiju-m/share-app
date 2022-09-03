@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "share-app-7e219": {
+      "hosting": {
+        "share-app": [
+          "share-app-7e219"
+        ]
+      }
+    }
+  }
+}

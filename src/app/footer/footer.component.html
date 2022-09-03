@@ -1,0 +1,31 @@
+<!-- <div class='footer-wrapper container'>
+    <div class='row'>
+        <div class='col-sm'>test</div>
+        <div class='col-sm'>test</div>
+        <div class='col-sm'>test</div>
+    </div>
+</div> -->
+
+
+<div class="footer-wrapper container-fluid">
+    <div class="row">
+        <div class="col footer-item">
+            <div routerLink='/list' (click)="clickItem('買うものリスト')" class='d-flex justify-content-center align-items-center footer-item-child'>
+                <i class="fas fa-shopping-cart fa-lg buy-icon"></i>
+                <p class='footer-text-buy'>買うもの</p>
+            </div>
+        </div>
+        <div class="col footer-item">
+            <div routerLink='/house-work' (click)="clickItem('家事分担')" class='d-flex justify-content-center align-items-center footer-item-child'>
+                <i class="fas fa-broom fa-lg clean-icon"></i>
+                <p class='footer-text-clean'>家事分担</p>
+            </div>
+        </div>
+        <div class="col footer-item">
+            <div routerLink='/money' (click)="clickItem('お金関連')" class='d-flex justify-content-center align-items-center footer-item-child'>
+                <i class="far fa-credit-card fa-lg money-icon"></i>
+                <p class='footer-text-money'>お金</p>
+            </div>
+        </div>
+    </div>
+</div>

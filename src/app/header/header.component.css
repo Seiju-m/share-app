@@ -1,0 +1,18 @@
+.header-wrapper {
+    background-color: #F6F6F6;
+    height: 60px;
+    width: 100%;
+    padding: 10px;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+
+.logout-icon {
+    position: relative;
+    left: 147px;
+    top: 7px;
+}
